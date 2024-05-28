@@ -1,63 +1,135 @@
-import { useState } from "react";
-import "../App.css";
+// eslint-disable-next-line no-unused-vars
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { Box, TextField, Button, Typography } from "@mui/material";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function Calculator() {
-  const [peso, setPeso] = useState("");
-  const [altura, setAltura] = useState("");
-  const [resultado, setResultado] = useState("");
+const containerStyle = {
+  width: "100%",
+  maxWidth: 600,
+  textAlign: "center",
+  bgcolor: "white",
+  boxShadow: 24,
+  p: 4,
+  borderRadius: "8px",
+  marginBottom: "20px", // Adiciona um espaçamento para evitar sobreposição com o footer
+};
 
-  const calcularImc = () => {
-    const alt = altura / 100;
-    const imc = peso / (alt * alt);
-    const storagedName = localStorage.getItem("nome");
+const textFieldStyle = {
+  marginBottom: 2,
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "#000000",
+    },
+    "&:hover fieldset": {
+      borderColor: "#1565c0",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#1565c0",
+    },
+  },
+};
 
-    if (imc < 18.6) {
-      setResultado(
-        `${storagedName}, você esta abaixo do peso! Seu IMC é: ${imc.toFixed(
-          2
-        )}`
+const buttonStyle = {
+  mt: 2,
+  backgroundColor: "#1976d2",
+  color: "white",
+  "&:hover": {
+    backgroundColor: "#1565c0",
+  },
+};
+
+function Calculator({ userName }) {
+  const [height, setHeight] = useState("");
+  const [weight, setWeight] = useState("");
+
+  const calculateBmi = () => {
+    const heightInMeters = parseFloat(height) / 100;
+    const weightInKg = parseFloat(weight);
+
+    if (
+      !isNaN(heightInMeters) &&
+      !isNaN(weightInKg) &&
+      heightInMeters > 0 &&
+      weightInKg > 0
+    ) {
+      const bmiValue = (weightInKg / (heightInMeters * heightInMeters)).toFixed(
+        2
       );
-    } else if (imc >= 18.6 && imc < 24.9) {
-      setResultado(
-        `${storagedName}, você esta no peso ideal! Seu IMC é: ${imc.toFixed(2)}`
+      const { category, color, emoticon } = getBmiCategory(bmiValue);
+
+      toast(
+        <Box>
+          <Typography variant="h6">
+            {userName}, seu IMC é: {bmiValue}
+          </Typography>
+          <Typography variant="h6">
+            {emoticon} Você está {category}
+          </Typography>
+        </Box>,
+        {
+          style: { borderLeft: `5px solid ${color}`, backgroundColor: "white" },
+        }
       );
-    } else if (imc >= 24.9 && imc < 34.9) {
-      setResultado(
-        `${storagedName}, você esta levemente acima do peso! Seu IMC é: ${imc.toFixed(
-          2
-        )}`
-      );
-    } else if (imc > 34.9) {
-      setResultado(
-        `${storagedName}, cuidado você esta com OBESIDADE! Seu IMC é: ${imc.toFixed(
-          2
-        )}`
-      );
+    } else {
+      toast.error("Dados inválidos", {
+        style: { backgroundColor: "white", color: "red" },
+      });
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      calculateBmi();
+    }
+  };
+
+  const getBmiCategory = (bmi) => {
+    if (bmi < 18.5)
+      return { category: "com magreza", color: "lightblue", emoticon: "🟦 😢" };
+    if (bmi < 24.9)
+      return {
+        category: "com peso normal",
+        color: "lightgreen",
+        emoticon: "✅ 😊",
+      };
+    if (bmi < 29.9)
+      return { category: "com sobrepeso", color: "yellow", emoticon: "⚠️ 🤔" };
+    if (bmi < 39.9)
+      return { category: "com obesidade", color: "orange", emoticon: "🟧 😟" };
+    return { category: "com obesidade grave", color: "red", emoticon: "🛑 😱" };
+  };
+
   return (
-    <div>
-      <h1>Calculadora de IMC</h1>
-      <p>Adicione seus dados abaixo</p>
-      <div>
-        <input
-          type="text"
-          value={peso}
-          onChange={(e) => setPeso(e.target.value)}
-          placeholder="Digite seu peso Ex: (kg)70"
-        />
-        <input
-          type="text"
-          value={altura}
-          onChange={(e) => setAltura(e.target.value)}
-          placeholder="Digite aqui sua altura Ex: (cm)170"
-        />
-        <button onClick={calcularImc}>Calcular</button>
-      </div>
-      <h2>{resultado}</h2>
-    </div>
+    <Box sx={containerStyle}>
+      <TextField
+        label="Altura (cm)"
+        variant="outlined"
+        value={height}
+        onChange={(e) => setHeight(e.target.value)}
+        onKeyDown={handleKeyDown}
+        fullWidth
+        sx={textFieldStyle}
+      />
+      <TextField
+        label="Peso (kg)"
+        variant="outlined"
+        value={weight}
+        onChange={(e) => setWeight(e.target.value)}
+        onKeyDown={handleKeyDown}
+        fullWidth
+        sx={textFieldStyle}
+      />
+      <Button variant="contained" sx={buttonStyle} onClick={calculateBmi}>
+        Calcular IMC
+      </Button>
+    </Box>
   );
 }
+
+Calculator.propTypes = {
+  userName: PropTypes.string.isRequired,
+};
 
 export default Calculator;
