@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 
-// Criação de um tema básico
 const theme = createTheme({
   palette: {
     primary: {

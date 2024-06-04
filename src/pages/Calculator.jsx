@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Box, TextField, Button, Typography } from "@mui/material";
@@ -13,7 +12,7 @@ const containerStyle = {
   boxShadow: 24,
   p: 4,
   borderRadius: "8px",
-  marginBottom: "20px", // Adiciona um espaçamento para evitar sobreposição com o footer
+  marginBottom: "20px", 
 };
 
 const textFieldStyle = {
@@ -85,6 +84,11 @@ function Calculator({ userName }) {
     }
   };
 
+  const handleReset = () => {
+    setHeight("");
+    setWeight("");
+  };
+
   const getBmiCategory = (bmi) => {
     if (bmi < 18.5)
       return { category: "com magreza", color: "lightblue", emoticon: "🟦 😢" };
@@ -123,6 +127,9 @@ function Calculator({ userName }) {
       />
       <Button variant="contained" sx={buttonStyle} onClick={calculateBmi}>
         Calcular IMC
+      </Button>
+      <Button variant="outlined" color="secondary" sx={{ mt: 2, ml: 2 }} onClick={handleReset}>
+        Refazer Cálculo
       </Button>
     </Box>
   );

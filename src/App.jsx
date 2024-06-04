@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import {
@@ -25,6 +24,7 @@ const modalStyle = {
   boxShadow: 24,
   p: 4,
   borderRadius: "8px",
+  outline: "none",
 };
 
 const containerStyle = {
@@ -32,9 +32,9 @@ const containerStyle = {
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  minHeight: "calc(100vh - 40px)", // Ajuste para caber o footer
+  minHeight: "calc(100vh - 40px)",
   backgroundColor: "#f5f5f5",
-  paddingBottom: "40px", // Espaço reservado para o footer
+  paddingBottom: "40px",
 };
 
 const appBarStyle = {
@@ -53,7 +53,7 @@ const buttonStyle = {
 const footerStyle = {
   backgroundColor: "#1976d2",
   color: "white",
-  padding: "10px 0",
+  padding: "20px 0",
   textAlign: "center",
   position: "fixed",
   bottom: 0,
