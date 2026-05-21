@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 192" fill="none">
+  <!-- pernas -->
+  <rect x="47" y="116" width="16" height="62" rx="8" fill="#334155"/>
+  <rect x="65" y="116" width="16" height="62" rx="8" fill="#334155"/>
+  <!-- braços -->
+  <rect x="31" y="62" width="12" height="54" rx="6" fill="#f4c9a6"/>
+  <rect x="85" y="62" width="12" height="54" rx="6" fill="#f4c9a6"/>
+  <!-- tronco (camisa) -->
+  <rect x="44" y="56" width="40" height="64" rx="20" fill="#10b981"/>
+  <path d="M56 56 L72 56 L67 66 L61 66 Z" fill="#6ee7b7"/>
+  <!-- pescoço -->
+  <rect x="58" y="46" width="12" height="13" rx="3" fill="#f4c9a6"/>
+  <!-- cabeça -->
+  <circle cx="64" cy="32" r="18" fill="#f4c9a6"/>
+  <!-- cabelo -->
+  <path d="M46 31 C46 16 54 11 64 11 C74 11 82 16 82 31 C77 23 70 21 64 21 C58 21 51 23 46 31 Z" fill="#2b3445"/>
+</svg>
